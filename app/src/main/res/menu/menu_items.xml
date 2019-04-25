@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/signIn_mItem" android:title="عضویت"/>
+<item android:id="@+id/logIn_mItem" android:title="ورود"/>
+<item android:id="@+id/signOut_mItem" android:title="خروج"/>
+
+</menu>
