@@ -1,10 +1,14 @@
 package com.example.almas.Api;
 
 import com.example.almas.Models.ActivationAccountModel;
+import com.example.almas.Models.BillModel;
+import com.example.almas.Models.GetBillListRequestModel;
 import com.example.almas.Models.LogInModel;
 import com.example.almas.Models.ResponseModel;
 import com.example.almas.Models.SignInModel;
 import com.example.almas.Models.UserModel;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -23,5 +27,7 @@ public interface ApiService {
     @POST("Account/Login/")
     Call<ResponseModel<UserModel>> LogIn(@Body LogInModel model);
 
+    @POST("Admin/GetBills/")
+    Call<ResponseModel<ArrayList<BillModel>>> GetBills(@Body GetBillListRequestModel model);
 
 }

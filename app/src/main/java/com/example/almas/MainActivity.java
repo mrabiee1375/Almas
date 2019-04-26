@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -93,6 +95,18 @@ public class MainActivity extends AppCompatActivity {
         //List<String> a=new ArrayList<String>();
         //a.add("A");
         //Utility.oprnCustomToast(a,MainActivity.this);
+
+        // Create new fragment and transaction
+        Fragment newFragment = new FragmentCreateBill();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+         // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack
+        transaction.replace(R.id.fragmentFrame, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 
     @Override
