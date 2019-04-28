@@ -1,42 +1,27 @@
 package com.example.almas.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.almas.FragmentCreateAdminMessage;
+import com.example.almas.FragmentCreateBill;
 import com.example.almas.Models.ListAdapterModel;
 import com.example.almas.R;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends BaseAdapter implements android.widget.ListAdapter {
-    protected ArrayList<ListAdapterModel> list = new ArrayList<ListAdapterModel>();
-    protected Context context;
-
-    public ListAdapter(ArrayList<ListAdapterModel> list, Context context) {
-        this.list = list;
-        this.context = context;
-    }
-
-    @Override
-    public int getCount() {
-        return list.size();
-    }
-
-    @Override
-    public Object getItem(int pos) {
-        return list.get(pos);
-
-    }
-
-    @Override
-    public long getItemId(int pos) {
-        return list.get(pos).getId();
-        //just return 0 if your list items do not have an Id variable.
+public class AdminMessagesListAdapter extends ListAdapter {
+    public AdminMessagesListAdapter(ArrayList<ListAdapterModel> list, Context context)
+    {
+        super(list,context);
     }
 
     @Override
@@ -58,16 +43,28 @@ public class ListAdapter extends BaseAdapter implements android.widget.ListAdapt
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //do something
-                list.remove(position); //or some other task
-                notifyDataSetChanged();
+                list.remove(position);
             }
         });
         updateBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //do something
-                notifyDataSetChanged();
+
+                Fragment newFragment = new FragmentCreateAdminMessage();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("update_flag", true);
+                bundle.putInt("message_id", list.get(position).getId());
+                newFragment.setArguments(bundle);
+                FragmentTransaction transaction =((AppCompatActivity)context).getSupportFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(R.id.fragmentFrame, newFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+
             }
         });
 

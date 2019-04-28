@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         //Utility.oprnCustomToast(a,MainActivity.this);
 
         // Create new fragment and transaction
-        Fragment newFragment = new FragmentCreateBill();
+        Fragment newFragment = new FragmentCreateAdminMessage();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
          // Replace whatever is in the fragment_container view with this fragment,

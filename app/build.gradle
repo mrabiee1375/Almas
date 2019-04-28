@@ -32,4 +32,7 @@ dependencies {
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.orhanobut:dialogplus:1.11@aar'
+    implementation 'com.github.aliab:Persian-Date-Picker-Dialog:1.4'
+    implementation group: 'com.squareup.picasso', name: 'picasso', version: '2.5.2'
+
 }
