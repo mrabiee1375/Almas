@@ -15,12 +15,15 @@
             android:layout_weight="0.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Spinner>
-        <EditText
-            android:id="@+id/test"
+        <TextView
+            android:id="@+id/messages_from_date"
+            android:hint="از تاریخ"
             android:layout_weight="0.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <EditText
+        <TextView
+            android:hint="تا تاریخ"
+            android:id="@+id/messages_to_date"
             android:layout_weight="0.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

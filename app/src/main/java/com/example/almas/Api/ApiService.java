@@ -3,10 +3,12 @@ package com.example.almas.Api;
 import com.example.almas.Models.ActivationAccountModel;
 import com.example.almas.Models.AdminMessageModel;
 import com.example.almas.Models.BillModel;
+import com.example.almas.Models.ChargeModel;
 import com.example.almas.Models.CreateAndEditAdminMessageRequest;
 import com.example.almas.Models.CreateAndEditBillRequestModel;
 import com.example.almas.Models.GetAdminMessgesRequestModel;
 import com.example.almas.Models.GetBillListRequestModel;
+import com.example.almas.Models.GetChargesRequestModel;
 import com.example.almas.Models.LogInModel;
 import com.example.almas.Models.ResponseModel;
 import com.example.almas.Models.SignInModel;
@@ -57,5 +59,18 @@ public interface ApiService {
 
     @GET("Admin/GetAdminMessageDetails/")
     Call<ResponseModel<AdminMessageModel>> GetAdminMessageDetails(@Query("messageId")int messageId);
+
+    //admin charge region
+    @POST("Admin/GetChargeRecords/")
+    Call<ResponseModel<ArrayList<ChargeModel>>> GetChargeRecords(@Body GetChargesRequestModel model);
+
+    @POST("Admin/CreateCharge/")
+    Call<ResponseModel<ChargeModel>> CreateCharge(@Body ChargeModel model);
+
+    @POST("Admin/UpdateCharge/")
+    Call<ResponseModel<ChargeModel>> UpdateCharge(@Body ChargeModel model);
+
+    @GET("Admin/GetCharge/")
+    Call<ResponseModel<ChargeModel>> GetCharge(@Query("chargeId")int chargeId);
 
 }

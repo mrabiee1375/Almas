@@ -24,12 +24,11 @@
             android:layout_marginRight="40dp">
 
             <EditText
-                android:id="@+id/create_bill_title"
+                android:id="@+id/create_admin_message_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_shape"
-                android:hint="عنوان قبض"
-                />
+                android:hint="عنوان پیام" />
 
 
         </android.support.design.widget.TextInputLayout>
@@ -41,12 +40,11 @@
             android:layout_marginRight="40dp">
 
             <EditText
-                android:id="@+id/create_bill_number"
+                android:id="@+id/create_admin_message_Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_shape"
-                android:hint="شماره قبض"
-                />
+                android:hint="متن پیام" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -54,53 +52,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp">
-
-            <EditText
-                android:id="@+id/create_bill_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_shape"
-                android:hint="مبلغ قبض"
-                />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <Spinner
-            android:layout_marginTop="20dp"
-            android:id="@+id/create_bill_types"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_marginRight="40dp"/>
 
         <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/create_date_picker"
-                android:text="انتخاب تاریخ"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/create_end_date"
-                android:text="انتخاب تاریخ"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-            <Button
-                android:id="@+id/choose_image"
-                android:layout_marginTop="20dp"
-                android:text="انتخاب تصویر"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:id="@+id/bill_image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:src="@drawable/pictures" />
         <Button
-            android:id="@+id/submit_create_bill"
+            android:id="@+id/submit_create_admin_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

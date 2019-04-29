@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.almas.Api.ApiService;
 import com.example.almas.Api.RetrofitClient;
@@ -29,21 +27,13 @@ import com.example.almas.Models.CreateAndEditBillRequestModel;
 import com.example.almas.Models.ResponseModel;
 import com.example.almas.Models.StaticVars;
 import com.example.almas.Utilities.Utility;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 import ir.hamsaa.persiandatepicker.Listener;
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
-import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +51,6 @@ public class FragmentCreateBill extends Fragment {
     private EditText billNumber;
     private EditText price;
     private int billId = 0;
-    private PersianDatePickerDialog picker;
     private int IMAGE_REQUEST = 5;
     private PersianCalendar initDate = new PersianCalendar();
     boolean updateBill=false;
@@ -69,8 +58,11 @@ public class FragmentCreateBill extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        updateBill = getArguments().getBoolean("update_flag");
-        billId = getArguments().getInt("bill_id");
+        try {
+            updateBill = getArguments().getBoolean("update_flag");
+            billId = getArguments().getInt("bill_id");
+        }catch (Exception ex)
+        {}
         return inflater.inflate(R.layout.fragment_create_bill, container, false);
     }
 
@@ -85,7 +77,6 @@ public class FragmentCreateBill extends Fragment {
         billNumber = (EditText) getView().findViewById(R.id.create_bill_number);
         price = (EditText) getView().findViewById(R.id.create_bill_price);
         billTypesSpinner = (Spinner) getView().findViewById(R.id.create_bill_types);
-        initDate.setPersianDate(1370, 3, 13);
         endDateView.setText(initDate.getPersianYear() + "/" + initDate.getPersianMonth() + "/" + initDate.getPersianDay());
 
         if(updateBill)
@@ -111,7 +102,7 @@ public class FragmentCreateBill extends Fragment {
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowCalendar();
+                Utility.ShowCalendar(getActivity(),endDateView);
             }
         });
 
@@ -140,31 +131,7 @@ public class FragmentCreateBill extends Fragment {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_REQUEST);
     }
 
-    //function that  prepare and show calendar view
-    public void ShowCalendar() {
-        picker = new PersianDatePickerDialog(getActivity())
-                .setPositiveButtonString("ثبت")
-                .setNegativeButton("انصراف")
-                .setTodayButton("امروز")
-                .setTodayButtonVisible(true)
-                .setInitDate(initDate)
-                .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
-                .setMinYear(1300)
-                .setActionTextColor(Color.GRAY)
-                .setListener(new Listener() {
-                    @Override
-                    public void onDateSelected(PersianCalendar persianCalendar) {
-                        endDateView.setText(persianCalendar.getPersianYear() + "/" + persianCalendar.getPersianMonth() + "/" + persianCalendar.getPersianDay());
-                    }
 
-                    @Override
-                    public void onDismissed() {
-
-                    }
-                });
-
-        picker.show();
-    }
 
     //submit create bill model to api
     public void SubmitCreate() {

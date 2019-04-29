@@ -3,6 +3,7 @@ package com.example.almas.Utilities;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.Gravity;
@@ -10,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.almas.Models.StaticVars;
 import com.example.almas.R;
@@ -28,6 +32,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
+
+import ir.hamsaa.persiandatepicker.Listener;
+import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
+import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 
 public class Utility {
     public static void oprnCustomToast1(List<String> list, Context dialogContext) {
@@ -85,6 +93,70 @@ public class Utility {
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
 
         return encImage;
+    }
+
+    public static boolean SetListViewHeightBasedOnItems(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                float px = 500 * (listView.getResources().getDisplayMetrics().density);
+                item.measure(View.MeasureSpec.makeMeasureSpec((int) px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+            // Get padding
+            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight + totalPadding;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+            //setDynamicHeight(listView);
+            return true;
+
+        } else {
+            return false;
+        }
+
+    }
+    //function that  prepare and show calendar view
+    public static void ShowCalendar(Context context,final TextView textView) {
+        PersianCalendar initDate = new PersianCalendar();
+        initDate.setPersianDate(1370, 3, 13);
+        PersianDatePickerDialog picker;
+        picker = new PersianDatePickerDialog(context)
+                .setPositiveButtonString("ثبت")
+                .setNegativeButton("انصراف")
+                .setTodayButton("امروز")
+                .setTodayButtonVisible(true)
+                .setInitDate(initDate)
+                .setMaxYear(PersianDatePickerDialog.THIS_YEAR)
+                .setMinYear(1300)
+                .setActionTextColor(Color.GRAY)
+                .setListener(new Listener() {
+                    @Override
+                    public void onDateSelected(PersianCalendar persianCalendar) {
+                        textView.setText(persianCalendar.getPersianYear() + "/" + persianCalendar.getPersianMonth() + "/" + persianCalendar.getPersianDay());
+                    }
+
+                    @Override
+                    public void onDismissed() {
+
+                    }
+                });
+
+        picker.show();
     }
 
 

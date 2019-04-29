@@ -6,16 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.almas.Adapters.BillListAdapter;
 import com.example.almas.Api.ApiService;
@@ -28,7 +27,6 @@ import com.example.almas.Models.StaticVars;
 import com.example.almas.Utilities.Utility;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +36,9 @@ public class FragmentBillsList extends Fragment {
 
     private ApiService _ApiService;
     private Spinner billTypesSpinner;
+
+    TextView FilterStartDate;
+    TextView FilterEndDate;
 
     @Nullable
     @Override
@@ -57,6 +58,22 @@ public class FragmentBillsList extends Fragment {
         model.setPage(1);
         GetBillsList(model);
 
+        FilterEndDate=(TextView) getView().findViewById(R.id.bills_end_date);
+        FilterStartDate=(TextView) getView().findViewById(R.id.bills_start_date);
+
+        FilterEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.ShowCalendar(getActivity(),FilterEndDate);
+            }
+        });
+        FilterStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.ShowCalendar(getActivity(),FilterStartDate);
+            }
+        });
+
         //prepare spinning
         billTypesSpinner = (Spinner) getView().findViewById(R.id.bill_types);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, StaticVars.BillTypesStrList);
@@ -70,11 +87,14 @@ public class FragmentBillsList extends Fragment {
                 Integer id = StaticVars.BillTypes.get(billTypesSpinner.getSelectedItemPosition());
                 GetBillListRequestModel model = new GetBillListRequestModel();
                 model.setCount(StaticVars.ListItemsCount);
+                model.setToDateFa(FilterEndDate.getText().toString());
+                model.setFromDateFa(FilterStartDate.getText().toString());
                 model.setPage(1);
                 model.setBillType(id);
                 GetBillsList(model);
             }
         });
+
 
     }
 

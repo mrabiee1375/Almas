@@ -10,20 +10,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/bill_types"
-            android:layout_weight="0.1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
+
         <TextView
-            android:hint="ابتدای بازه"
-            android:id="@+id/bills_start_date"
+            android:hint="از تاریخ"
+            android:id="@+id/charges_start_date"
             android:layout_weight="0.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:hint="انتهای بازه"
-            android:id="@+id/bills_end_date"
+            android:hint="تا تاریخ"
+            android:id="@+id/charges_end_date"
             android:layout_weight="0.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -35,7 +31,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/bills_list_view"
+        android:id="@+id/charges_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 </LinearLayout>

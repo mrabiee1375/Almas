@@ -1,10 +1,5 @@
 package com.example.almas;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,29 +8,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.almas.Api.ApiService;
 import com.example.almas.Api.RetrofitClient;
 import com.example.almas.Models.AdminMessageModel;
-import com.example.almas.Models.BillModel;
 import com.example.almas.Models.CreateAndEditAdminMessageRequest;
-import com.example.almas.Models.CreateAndEditBillRequestModel;
 import com.example.almas.Models.ResponseModel;
 import com.example.almas.Models.StaticVars;
 import com.example.almas.Utilities.Utility;
-import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-
-import ir.hamsaa.persiandatepicker.Listener;
-import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
-import ir.hamsaa.persiandatepicker.util.PersianCalendar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,18 +29,19 @@ public class FragmentCreateAdminMessage extends Fragment {
     private EditText title;
     private EditText text;
     private int messageId;
-    boolean updateBill = false;
+    boolean updateMessage = false;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         try {
-            updateBill = getArguments().getBoolean("update_flag");
+            updateMessage = getArguments().getBoolean("update_flag");
             messageId = getArguments().getInt("message_id");
         } catch (Exception ex) {
 
         }
-        return inflater.inflate(R.layout.fragment_create_bill, container, false);
+        return inflater.inflate(R.layout.fragment_create_admin_message, container, false);
     }
 
     @Override
@@ -68,7 +52,7 @@ public class FragmentCreateAdminMessage extends Fragment {
         text = (EditText) getView().findViewById(R.id.create_admin_message_Text);
         title = (EditText) getView().findViewById(R.id.create_admin_message_title);
 
-        if (updateBill) {
+        if (updateMessage) {
             fillForm();
         }
 
@@ -76,7 +60,7 @@ public class FragmentCreateAdminMessage extends Fragment {
         createAdminMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (updateBill) {
+                if (updateMessage) {
                     SubmitUpdate();
                 } else {
                     SubmitCreate();

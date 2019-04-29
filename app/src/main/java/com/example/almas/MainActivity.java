@@ -66,6 +66,24 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.signOut_mItem:
                         LogOut();
                         break;
+                    case R.id.messages_mItem:
+                        LoadFragment(new FragmentAdminMessagesList());
+                        break;
+                    case R.id.create_message_mItem:
+                        LoadFragment(new FragmentCreateAdminMessage());
+                        break;
+                    case R.id.charges_mItem:
+                        LoadFragment(new FragmentChargesList());
+                        break;
+                    case R.id.create_charge_mItem:
+                        LoadFragment(new FragmentCreateCharge());
+                        break;
+                    case R.id.bills_mItem:
+                        LoadFragment(new FragmentBillsList());
+                        break;
+                    case R.id.create_bill_mItem:
+                        LoadFragment(new FragmentCreateBill());
+                        break;
 
                 }
                 return false;
@@ -96,17 +114,7 @@ public class MainActivity extends AppCompatActivity {
         //a.add("A");
         //Utility.oprnCustomToast(a,MainActivity.this);
 
-        // Create new fragment and transaction
-        Fragment newFragment = new FragmentCreateAdminMessage();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-         // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack
-        transaction.replace(R.id.fragmentFrame, newFragment);
-        transaction.addToBackStack(null);
-
-        // Commit the transaction
-        transaction.commit();
     }
 
     @Override
@@ -129,11 +137,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void GoToActivatinLayout() {
-        Intent intent = new Intent(MainActivity.this, ActivationCodeLayout.class);
-        startActivity(intent);
-    }
-
     public void LogOut() {
 
         SharedPreferences.Editor sharedEditor = getSharedPreferences("userDetailsShEditor", MODE_PRIVATE).edit();
@@ -151,7 +154,22 @@ public class MainActivity extends AppCompatActivity {
         signIn_mItem.setTitle("عضویت");
     }
 
+    public  void LoadFragment(Fragment fragment)
+    {
+        // Create new fragment and transaction
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack
+        transaction.replace(R.id.fragmentFrame, fragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        drawerLayout.closeDrawer(Gravity.RIGHT);
+    }
 
 
 }

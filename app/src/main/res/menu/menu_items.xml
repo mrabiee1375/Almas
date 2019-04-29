@@ -3,5 +3,10 @@
 <item android:id="@+id/signIn_mItem" android:title="عضویت"/>
 <item android:id="@+id/logIn_mItem" android:title="ورود"/>
 <item android:id="@+id/signOut_mItem" android:title="خروج"/>
-
+<item android:id="@+id/bills_mItem" android:title="قبوض"/>
+<item android:id="@+id/create_bill_mItem" android:title="افزودن قبض"/>
+<item android:id="@+id/charges_mItem" android:title="شارژ"/>
+<item android:id="@+id/create_charge_mItem" android:title="افزودن شارژ"/>
+<item android:id="@+id/messages_mItem" android:title="پیام ها"/>
+<item android:id="@+id/create_message_mItem" android:title="افزودن پیام"/>
 </menu>

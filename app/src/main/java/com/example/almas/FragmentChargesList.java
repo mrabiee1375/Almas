@@ -13,14 +13,14 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.almas.Adapters.AdminMessagesListAdapter;
 import com.example.almas.Adapters.BillListAdapter;
+import com.example.almas.Adapters.ChargeListAdapter;
 import com.example.almas.Api.ApiService;
 import com.example.almas.Api.RetrofitClient;
-import com.example.almas.Models.AdminMessageModel;
 import com.example.almas.Models.BillModel;
-import com.example.almas.Models.GetAdminMessgesRequestModel;
+import com.example.almas.Models.ChargeModel;
 import com.example.almas.Models.GetBillListRequestModel;
+import com.example.almas.Models.GetChargesRequestModel;
 import com.example.almas.Models.ListAdapterModel;
 import com.example.almas.Models.ResponseModel;
 import com.example.almas.Models.StaticVars;
@@ -32,18 +32,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentAdminMessagesList extends Fragment {
+public class FragmentChargesList extends Fragment {
 
     private ApiService _ApiService;
-    private Spinner billTypesSpinner;
 
     TextView FilterStartDate;
     TextView FilterEndDate;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_admin_messages_list, container, false);
+        return inflater.inflate(R.layout.fragment_charges_list, container, false);
 
 
     }
@@ -51,26 +51,25 @@ public class FragmentAdminMessagesList extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        FilterEndDate=(TextView) getView().findViewById(R.id.charges_end_date);
+        FilterStartDate=(TextView) getView().findViewById(R.id.charges_start_date);
 
-        FilterStartDate=(TextView) getView().findViewById(R.id.messages_from_date);
-        FilterEndDate=(TextView) getView().findViewById(R.id.messages_to_date);
         //Api Request Model
-        GetAdminMessgesRequestModel model = new GetAdminMessgesRequestModel();
+        GetChargesRequestModel model = new GetChargesRequestModel();
         model.setCount(StaticVars.ListItemsCount);
         model.setPage(1);
-        GetAdminMessagesList(model);
-
+        GetChargesList(model);
 
         Button button = (Button) getView().findViewById(R.id.set_filter);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GetAdminMessgesRequestModel model = new GetAdminMessgesRequestModel();
-                model.setCount(StaticVars.ListItemsCount);
-                model.setPage(1);
+                GetChargesRequestModel model = new GetChargesRequestModel();
                 model.setFromDateFa(FilterStartDate.getText().toString());
                 model.setToDateFa(FilterEndDate.getText().toString());
-                GetAdminMessagesList(model);
+                model.setCount(StaticVars.ListItemsCount);
+                model.setPage(1);
+                GetChargesList(model);
             }
         });
 
@@ -88,40 +87,36 @@ public class FragmentAdminMessagesList extends Fragment {
         });
     }
 
-    public void GetAdminMessagesList(GetAdminMessgesRequestModel model) {
+    public void GetChargesList(GetChargesRequestModel model) {
+
+
         _ApiService = RetrofitClient.getAPIService(StaticVars.BaseUrl);
-        _ApiService.GetAdminMessages(model).enqueue(new Callback<ResponseModel<ArrayList<AdminMessageModel>>>() {
+        _ApiService.GetChargeRecords(model).enqueue(new Callback<ResponseModel<ArrayList<ChargeModel>>>() {
             @Override
-            public void onResponse(Call<ResponseModel<ArrayList<AdminMessageModel>>> call, Response<ResponseModel<ArrayList<AdminMessageModel>>> response) {
-                try {
+            public void onResponse(Call<ResponseModel<ArrayList<ChargeModel>>> call, Response<ResponseModel<ArrayList<ChargeModel>>> response) {
+                if (response.body().getIsSuccess()) {
+                    //Adapter List
+                    ArrayList<ListAdapterModel> adapterModelsList = new ArrayList<ListAdapterModel>();
 
-                    if (response.body().getIsSuccess()) {
-                        //Adapter List
-                        ArrayList<ListAdapterModel> adapterModelsList = new ArrayList<ListAdapterModel>();
-
-                        //Response Data = List of bills
-                        ArrayList<AdminMessageModel> responseData = response.body().getData();
-                        for (int i = 0; i < responseData.size(); i++) {
-                            ListAdapterModel item = new ListAdapterModel();
-                            item.setId(responseData.get(i).getId());
-                            item.setText(responseData.get(i).getTitle());
-                            adapterModelsList.add(item);
-                        }
-
-                        AdminMessagesListAdapter adapter = new AdminMessagesListAdapter(adapterModelsList, getActivity());
-                        ListView lView = (ListView) getView().findViewById(R.id.bills_list_view);
-                        lView.setAdapter(adapter);
+                    //Response Data = List of bills
+                    ArrayList<ChargeModel> responseData = response.body().getData();
+                    for (int i = 0; i < responseData.size(); i++) {
+                        ListAdapterModel item = new ListAdapterModel();
+                        item.setId(responseData.get(i).getId());
+                        item.setText(responseData.get(i).getTitle());
+                        adapterModelsList.add(item);
                     }
+
+                    ChargeListAdapter adapter = new ChargeListAdapter(adapterModelsList, getActivity());
+                    ListView lView = (ListView) getView().findViewById(R.id.charges_list_view);
+                    lView.setAdapter(adapter);
                 }
-                catch (Exception ex)
-                {}
             }
 
             @Override
-            public void onFailure(Call<ResponseModel<ArrayList<AdminMessageModel>>> call, Throwable t) {
+            public void onFailure(Call<ResponseModel<ArrayList<ChargeModel>>> call, Throwable t) {
 
             }
-
         });
 
     }
