@@ -56,9 +56,23 @@ public class FragmentCreateCharge extends Fragment {
 
     @Override
     public void onResume() {
+
+
+
         chargeDetailsList = new ArrayList<ChargeDetailModel>();
         chargeDetailsList.add(new ChargeDetailModel());
+        addDetail = (Button) getView().findViewById(R.id.add_charge_detail_btn);
+        submitDetails = (Button) getView().findViewById(R.id.submit_charge_btn);
+        text = (EditText) getView().findViewById(R.id.create_charge_text);
+        title = (EditText) getView().findViewById(R.id.create_charge_title);
 
+        if(StaticVars.IsAdmin)
+        {
+            AdminOperations();
+        }
+        else{
+            NotAdminOperations();
+        }
         if (updateCharge) {
             FillForm();
         } else {
@@ -66,10 +80,7 @@ public class FragmentCreateCharge extends Fragment {
             detailsListView = (ListView) getView().findViewById(R.id.charge_details_list_view);
             detailsListView.setAdapter(adapter);
         }
-        addDetail = (Button) getView().findViewById(R.id.add_charge_detail_btn);
-        submitDetails = (Button) getView().findViewById(R.id.submit_charge_btn);
-        text = (EditText) getView().findViewById(R.id.create_charge_text);
-        title = (EditText) getView().findViewById(R.id.create_charge_title);
+
 
         addDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +204,22 @@ public class FragmentCreateCharge extends Fragment {
 
             }
         });
+
+    }
+    public void AdminOperations()
+    {
+        Utility.EnableEditText(title);
+        Utility.EnableEditText(text);
+        addDetail.setVisibility(View.VISIBLE);
+        submitDetails.setVisibility(View.VISIBLE);
+
+    }
+    public void NotAdminOperations()
+    {
+        addDetail.setVisibility(View.INVISIBLE);
+        submitDetails.setVisibility(View.INVISIBLE);
+        Utility.DisableEditText(title);
+        Utility.DisableEditText(text);
 
     }
 }

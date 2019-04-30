@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.almas.Models.StaticVars;
 import com.example.almas.Models.UserModel;
 import com.example.almas.Utilities.Utility;
 import com.google.gson.Gson;
@@ -100,14 +101,10 @@ public class MainActivity extends AppCompatActivity {
             TextView fullNameTtextView = (TextView) navigationView.getHeaderView(0).findViewById(R.id.fullName_textView);
             String fullName = userModel.getFirstName() + " " + userModel.getLastName();
             fullNameTtextView.setText(fullName);
-            MenuItem signIn_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.signIn_mItem);
-            MenuItem logIn_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.logIn_mItem);
-            logIn_mItem.setVisible(false);
-            signIn_mItem.setTitle("مشاهده مشخصات");
-        } else {
-            MenuItem logout_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.signOut_mItem);
-            logout_mItem.setVisible(false);
+            AfterLoginOperations(userModel);
 
+        } else {
+           BeforeLoginOperations();
         }
 
         //List<String> a=new ArrayList<String>();
@@ -152,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
         MenuItem logIn_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.logIn_mItem);
         logIn_mItem.setVisible(true);
         signIn_mItem.setTitle("عضویت");
+
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     public  void LoadFragment(Fragment fragment)
@@ -171,5 +171,53 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.closeDrawer(Gravity.RIGHT);
     }
 
+    public  void  AfterLoginOperations(UserModel model)
+    {
+        StaticVars.IsAdmin=model.getAdmin();
+        MenuItem signIn_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.signIn_mItem);
+        signIn_mItem.setTitle("مشاهده مشخصات");
+        MenuItem logIn_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.logIn_mItem);
+        logIn_mItem.setVisible(false);
+
+        MenuItem createMessage_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.create_message_mItem);
+        MenuItem createCharge_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.create_charge_mItem);
+        MenuItem createBill_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.create_bill_mItem);
+        MenuItem bills_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.bills_mItem);
+        MenuItem charges_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.charges_mItem);
+        MenuItem message_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.messages_mItem);
+        bills_mItem.setVisible(true);
+        charges_mItem.setVisible(true);
+        message_mItem.setVisible(true);
+
+        if(!model.getAdmin()) {
+            createMessage_mItem.setVisible(false);
+            createCharge_mItem.setVisible(false);
+            createBill_mItem.setVisible(false);
+        }
+        else
+        {
+            createMessage_mItem.setVisible(true);
+            createCharge_mItem.setVisible(true);
+            createBill_mItem.setVisible(true);
+        }
+
+    }
+    public  void  BeforeLoginOperations()
+    {
+        MenuItem logout_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.signOut_mItem);
+        MenuItem createMessage_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.create_message_mItem);
+        MenuItem createCharge_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.create_charge_mItem);
+        MenuItem createBill_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.create_bill_mItem);
+        MenuItem bills_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.bills_mItem);
+        MenuItem charges_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.charges_mItem);
+        MenuItem message_mItem = (MenuItem) navigationView.getMenu().findItem(R.id.messages_mItem);
+        bills_mItem.setVisible(false);
+        charges_mItem.setVisible(false);
+        message_mItem.setVisible(false);
+        logout_mItem.setVisible(false);
+        createMessage_mItem.setVisible(false);
+        createCharge_mItem.setVisible(false);
+        createBill_mItem.setVisible(false);
+    }
 
 }

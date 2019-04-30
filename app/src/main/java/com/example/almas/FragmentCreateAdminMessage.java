@@ -51,12 +51,19 @@ public class FragmentCreateAdminMessage extends Fragment {
 
         text = (EditText) getView().findViewById(R.id.create_admin_message_Text);
         title = (EditText) getView().findViewById(R.id.create_admin_message_title);
+        createAdminMessage = (Button) getView().findViewById(R.id.submit_create_admin_message);
 
+        if(StaticVars.IsAdmin)
+        {
+            AdminOperations();
+        }
+        else{
+            NotAdminOperations();
+        }
         if (updateMessage) {
             fillForm();
         }
 
-        createAdminMessage = (Button) getView().findViewById(R.id.submit_create_admin_message);
         createAdminMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,5 +180,20 @@ public class FragmentCreateAdminMessage extends Fragment {
 
             }
         });
+    }
+
+    public void NotAdminOperations()
+    {
+        createAdminMessage.setVisibility(View.INVISIBLE);
+        Utility.DisableEditText(title);
+        Utility.DisableEditText(text);
+
+    }
+    public void AdminOperations()
+    {
+        createAdminMessage.setVisibility(View.VISIBLE);
+        Utility.EnableEditText(title);
+        Utility.EnableEditText(text);
+
     }
 }

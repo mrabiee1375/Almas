@@ -28,6 +28,17 @@ public class UserModel {
     @SerializedName("userToken")
     @Expose
     private String userToken;
+    @SerializedName("isAdmin")
+    @Expose
+    private boolean isAdmin;
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public boolean getAdmin() {
+        return isAdmin;
+    }
 
     public String getFirstName() {
         return firstName;

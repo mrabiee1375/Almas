@@ -158,7 +158,18 @@ public class Utility {
 
         picker.show();
     }
-
+    public static void DisableEditText(EditText view)
+    {
+        view.setFocusable(false);
+        view.setFocusableInTouchMode(false);
+        view.setClickable(false);
+    }
+    public static void EnableEditText(EditText view)
+    {
+        view.setFocusable(true);
+        view.setFocusableInTouchMode(true);
+        view.setClickable(true);
+    }
 
 
 }

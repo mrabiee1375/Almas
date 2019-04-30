@@ -77,8 +77,20 @@ public class FragmentCreateBill extends Fragment {
         billNumber = (EditText) getView().findViewById(R.id.create_bill_number);
         price = (EditText) getView().findViewById(R.id.create_bill_price);
         billTypesSpinner = (Spinner) getView().findViewById(R.id.create_bill_types);
+        chooseImage = (Button) getView().findViewById(R.id.choose_image);
+        datePicker = (Button) getView().findViewById(R.id.create_date_picker);
+        createBill = (Button) getView().findViewById(R.id.submit_create_bill);
+
         endDateView.setText(initDate.getPersianYear() + "/" + initDate.getPersianMonth() + "/" + initDate.getPersianDay());
 
+
+        if(StaticVars.IsAdmin)
+        {
+            AdminOperations();
+        }
+        else{
+            NotAdminOperations();
+        }
         if(updateBill)
         {
             fillForm();
@@ -90,7 +102,6 @@ public class FragmentCreateBill extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         billTypesSpinner.setAdapter(adapter);
 
-        chooseImage = (Button) getView().findViewById(R.id.choose_image);
         chooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +109,6 @@ public class FragmentCreateBill extends Fragment {
             }
         });
 
-        datePicker = (Button) getView().findViewById(R.id.create_date_picker);
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +116,6 @@ public class FragmentCreateBill extends Fragment {
             }
         });
 
-        createBill = (Button) getView().findViewById(R.id.submit_create_bill);
         createBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,6 +297,24 @@ public class FragmentCreateBill extends Fragment {
 
     }
 
+    public void NotAdminOperations()
+    {
+        chooseImage.setVisibility(View.INVISIBLE);
+        datePicker.setVisibility(View.INVISIBLE);
+        createBill.setVisibility(View.INVISIBLE);
+        Utility.DisableEditText(title);
+        Utility.DisableEditText(billNumber);
+        Utility.DisableEditText(price);
+    }
+    public void AdminOperations()
+    {
+        chooseImage.setVisibility(View.VISIBLE);
+        datePicker.setVisibility(View.VISIBLE);
+        createBill.setVisibility(View.VISIBLE);
+        Utility.EnableEditText(title);
+        Utility.EnableEditText(billNumber);
+        Utility.EnableEditText(price);
+    }
 
 
 }

@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.example.almas.FragmentCreateAdminMessage;
 import com.example.almas.Models.ChargeDetailModel;
 import com.example.almas.Models.ListAdapterModel;
+import com.example.almas.Models.StaticVars;
 import com.example.almas.R;
+import com.example.almas.Utilities.Utility;
 
 import java.util.ArrayList;
 
@@ -58,15 +60,27 @@ public class ChargeDetailListAdapter extends BaseAdapter implements android.widg
         }
 
         //Handle TextView and display string from your list
-       final TextView chargeItemTitle = (EditText)view.findViewById(R.id.charge_detail_title);
+       final EditText chargeItemTitle = (EditText)view.findViewById(R.id.charge_detail_title);
         chargeItemTitle.setText(list.get(position).getTitle());
 
-        final TextView chargeItemPrice= (EditText)view.findViewById(R.id.charge_detail_price);
+        final EditText chargeItemPrice= (EditText)view.findViewById(R.id.charge_detail_price);
         chargeItemPrice.setText(list.get(position).getPrice());
 
 
         //Handle buttons and add onClickListeners
         Button deleteBtn = (Button) view.findViewById(R.id.charge_detail_delete);
+
+        if(StaticVars.IsAdmin)
+        {
+            deleteBtn.setVisibility(View.VISIBLE);
+            Utility.EnableEditText(chargeItemTitle);
+            Utility.EnableEditText(chargeItemPrice);
+        }
+        else{
+            deleteBtn.setVisibility(View.INVISIBLE);
+            Utility.DisableEditText(chargeItemTitle);
+            Utility.DisableEditText(chargeItemPrice);
+        }
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override

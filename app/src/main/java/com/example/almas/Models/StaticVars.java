@@ -8,6 +8,7 @@ public class StaticVars {
     public static String BaseUrl = "http://192.168.1.33:45455/";
     //public  static  String BaseUrl="http://192.168.43.103:45455/";
 
+    public static boolean IsAdmin;
     public static int ListItemsCount = 20;
     public static HashMap<Integer, Integer> BillTypes = new HashMap<Integer, Integer>() {
         {

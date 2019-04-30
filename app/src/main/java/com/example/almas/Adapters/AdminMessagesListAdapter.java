@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.almas.FragmentCreateAdminMessage;
 import com.example.almas.FragmentCreateBill;
 import com.example.almas.Models.ListAdapterModel;
+import com.example.almas.Models.StaticVars;
 import com.example.almas.R;
 
 import java.util.ArrayList;
@@ -40,6 +41,16 @@ public class AdminMessagesListAdapter extends ListAdapter {
         Button deleteBtn = (Button) view.findViewById(R.id.delete_btn);
         Button updateBtn = (Button)view.findViewById(R.id.update_btn);
 
+        if(!StaticVars.IsAdmin)
+        {
+            deleteBtn.setVisibility(View.INVISIBLE);
+            updateBtn.setText("مشاهده");
+        }
+        else
+        {
+            deleteBtn.setVisibility(View.VISIBLE);
+            updateBtn.setText("مشاهده و ویرایش");
+        }
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
