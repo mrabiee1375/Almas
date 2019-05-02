@@ -16,12 +16,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Spinner>
         <TextView
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/edit_text_shape"
             android:hint="ابتدای بازه"
             android:id="@+id/bills_start_date"
             android:layout_weight="0.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:background="@drawable/edit_text_shape"
             android:hint="انتهای بازه"
             android:id="@+id/bills_end_date"
             android:layout_weight="0.2"
@@ -35,6 +38,7 @@
     </LinearLayout>
 
     <ListView
+        android:divider="#00FFFFFF"
         android:id="@+id/bills_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>

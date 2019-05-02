@@ -49,13 +49,24 @@
 
         </android.support.design.widget.TextInputLayout>
 
-
+<TextView
+    android:background="@drawable/edit_text_shape"
+    android:layout_marginTop="30dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:text="لیست جزئیات"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 
     <ListView
+        android:layout_marginTop="5dp"
+        android:divider="#00FFFFFF"
         android:fillViewport="true"
         android:id="@+id/charge_details_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content">
+
+    </ListView>
 
     <Button
         android:id="@+id/add_charge_detail_btn"

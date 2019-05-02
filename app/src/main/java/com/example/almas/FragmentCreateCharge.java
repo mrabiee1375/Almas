@@ -56,9 +56,6 @@ public class FragmentCreateCharge extends Fragment {
 
     @Override
     public void onResume() {
-
-
-
         chargeDetailsList = new ArrayList<ChargeDetailModel>();
         chargeDetailsList.add(new ChargeDetailModel());
         addDetail = (Button) getView().findViewById(R.id.add_charge_detail_btn);

@@ -55,10 +55,10 @@ public class SignInLayout extends AppCompatActivity {
             nationalCode.setText(userModel.getNationalcode());
             phoneNumber.setText(userModel.getPhoneNumber());
 
-            fName.setEnabled(false);
-            lName.setEnabled(false);
-            nationalCode.setEnabled(false);
-            phoneNumber.setEnabled(false);
+            Utility.DisableEditText(fName);
+            Utility.DisableEditText(lName);
+            Utility.DisableEditText(nationalCode);
+            Utility.DisableEditText(phoneNumber);
 
             Button signIn=(Button)findViewById(R.id.signIn_btn);
             signIn.setVisibility(View.GONE);

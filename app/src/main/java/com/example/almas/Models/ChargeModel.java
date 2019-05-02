@@ -16,12 +16,21 @@ public class ChargeModel {
     @SerializedName("text")
     @Expose
     private String text;
+    @SerializedName("isEnable")
+    @Expose
+    private boolean isEnable;
     @SerializedName("chargeDetails")
     @Expose
     private ArrayList<ChargeDetailModel> chargeDetails = null;
 
     public Integer getId() {
         return id;
+    }
+    public boolean getIsEnable() {
+        return isEnable;
+    }
+    public void setId(boolean isEnable) {
+        this.isEnable = isEnable;
     }
 
     public void setId(Integer id) {

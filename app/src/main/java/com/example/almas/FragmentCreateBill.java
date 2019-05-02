@@ -48,12 +48,15 @@ public class FragmentCreateBill extends Fragment {
     private String base64Image;
     private TextView endDateView;
     private EditText title;
+    private TextView createDateLable;
+    private TextView billTypeLable;
+    private TextView billTypeValue;
     private EditText billNumber;
     private EditText price;
     private int billId = 0;
     private int IMAGE_REQUEST = 5;
     private PersianCalendar initDate = new PersianCalendar();
-    boolean updateBill=false;
+    boolean updateBill = false;
 
     @Nullable
     @Override
@@ -61,8 +64,8 @@ public class FragmentCreateBill extends Fragment {
         try {
             updateBill = getArguments().getBoolean("update_flag");
             billId = getArguments().getInt("bill_id");
-        }catch (Exception ex)
-        {}
+        } catch (Exception ex) {
+        }
         return inflater.inflate(R.layout.fragment_create_bill, container, false);
     }
 
@@ -81,21 +84,23 @@ public class FragmentCreateBill extends Fragment {
         datePicker = (Button) getView().findViewById(R.id.create_date_picker);
         createBill = (Button) getView().findViewById(R.id.submit_create_bill);
 
+        createDateLable = (TextView) getView().findViewById(R.id.create_date_lable);
+        billTypeLable = (TextView) getView().findViewById(R.id.bill_type_lable);
+        billTypeValue = (TextView) getView().findViewById(R.id.bill_type_value);
+
+
         endDateView.setText(initDate.getPersianYear() + "/" + initDate.getPersianMonth() + "/" + initDate.getPersianDay());
 
 
-        if(StaticVars.IsAdmin)
-        {
+        if (StaticVars.IsAdmin) {
             AdminOperations();
-        }
-        else{
+        } else {
             NotAdminOperations();
         }
-        if(updateBill)
-        {
+        if (updateBill && !StaticVars.ChooseImageFlag) {
             fillForm();
         }
-
+        StaticVars.ChooseImageFlag=false;
         //prepare spinning
         billTypesSpinner = (Spinner) getView().findViewById(R.id.create_bill_types);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, StaticVars.BillTypesStrList);
@@ -112,18 +117,16 @@ public class FragmentCreateBill extends Fragment {
         datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utility.ShowCalendar(getActivity(),endDateView);
+                Utility.ShowCalendar(getActivity(), endDateView);
             }
         });
 
         createBill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(updateBill) {
+                if (updateBill) {
                     SubmitUpdate();
-                }
-                else
-                {
+                } else {
                     SubmitCreate();
                 }
             }
@@ -132,6 +135,7 @@ public class FragmentCreateBill extends Fragment {
 
     //create intent to choose image
     public void ChooseImageFunc() {
+        StaticVars.ChooseImageFlag = true;
         Intent intent = new Intent();
         // Show only images, no videos or anything else
         intent.setType("image/*");
@@ -139,7 +143,6 @@ public class FragmentCreateBill extends Fragment {
         // Always show the chooser (if there are multiple options available)
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_REQUEST);
     }
-
 
 
     //submit create bill model to api
@@ -160,18 +163,14 @@ public class FragmentCreateBill extends Fragment {
                         // Replace whatever is in the fragment_container view with this fragment,
                         // and add the transaction to the back stack
                         transaction.replace(R.id.fragmentFrame, newFragment);
-                        transaction.addToBackStack(null);
+                        //transaction.addToBackStack(null);
 
                         // Commit the transaction
                         transaction.commit();
+                    } else {
+                        Utility.oprnCustomToast(response.body().getDetailMessages(), getActivity());
                     }
-                    else
-                    {
-                        Utility.oprnCustomToast(response.body().getDetailMessages(),getActivity());
-                    }
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
 
                 }
 
@@ -205,11 +204,11 @@ public class FragmentCreateBill extends Fragment {
         if (requestCode == IMAGE_REQUEST && data != null && data.getData() != null) {
             Uri uri = data.getData();
             try {
-                // Log.d(TAG, String.valueOf(bitmap));
                 imageView.setImageURI(uri);
                 final InputStream imageStream = getActivity().getContentResolver().openInputStream(uri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 base64Image = Utility.EncodeImage(selectedImage);
+
             } catch (Exception ex) {
 
             }
@@ -217,8 +216,7 @@ public class FragmentCreateBill extends Fragment {
     }
 
     //Update Region
-    public  void  fillForm()
-    {
+    public void fillForm() {
         _ApiService = RetrofitClient.getAPIService(StaticVars.BaseUrl);
         _ApiService.GetBillDetail(billId).enqueue(new Callback<ResponseModel<BillModel>>() {
             @Override
@@ -226,23 +224,21 @@ public class FragmentCreateBill extends Fragment {
                 try {
                     if (response.body().getIsSuccess()) {
                         billNumber.setText(response.body().getData().getNumber());
+                        billTypeValue.setText(StaticVars.BillKeyValueTypes.get(
+                                response.body().getData().getBillType()
+                        ));
                         title.setText(response.body().getData().getTitle());
                         price.setText(response.body().getData().getPrice().toString());
                         endDateView.setText(response.body().getData().getEndDateFa());
-                        if(!response.body().getData().getImageAddress().isEmpty()) {
-                            String imageUrl=StaticVars.BaseUrl.substring(0, StaticVars.BaseUrl.length() - 1) + response.body().getData().getImageAddress();
-
+                        if (!response.body().getData().getImageAddress().isEmpty()) {
+                            String imageUrl = StaticVars.BaseUrl.substring(0, StaticVars.BaseUrl.length() - 1) + response.body().getData().getImageAddress();
                             Picasso.with(getActivity()).load(imageUrl).into(imageView);
 
                         }
+                    } else {
+                        Utility.oprnCustomToast(response.body().getDetailMessages(), getActivity());
                     }
-                    else
-                    {
-                        Utility.oprnCustomToast(response.body().getDetailMessages(),getActivity());
-                    }
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
 
                 }
 
@@ -272,18 +268,14 @@ public class FragmentCreateBill extends Fragment {
                         // Replace whatever is in the fragment_container view with this fragment,
                         // and add the transaction to the back stack
                         transaction.replace(R.id.fragmentFrame, newFragment);
-                        transaction.addToBackStack(null);
+                        //transaction.addToBackStack(null);
 
                         // Commit the transaction
                         transaction.commit();
+                    } else {
+                        Utility.oprnCustomToast(response.body().getDetailMessages(), getActivity());
                     }
-                    else
-                    {
-                        Utility.oprnCustomToast(response.body().getDetailMessages(),getActivity());
-                    }
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
 
                 }
 
@@ -297,17 +289,23 @@ public class FragmentCreateBill extends Fragment {
 
     }
 
-    public void NotAdminOperations()
-    {
-        chooseImage.setVisibility(View.INVISIBLE);
-        datePicker.setVisibility(View.INVISIBLE);
-        createBill.setVisibility(View.INVISIBLE);
+    public void NotAdminOperations() {
+        chooseImage.setVisibility(View.GONE);
+        datePicker.setVisibility(View.GONE);
+        createBill.setVisibility(View.GONE);
+        billTypesSpinner.setVisibility(View.GONE);
+        billTypeLable.setVisibility(View.VISIBLE);
+        billTypeValue.setVisibility(View.VISIBLE);
+        createDateLable.setVisibility(View.VISIBLE);
         Utility.DisableEditText(title);
         Utility.DisableEditText(billNumber);
         Utility.DisableEditText(price);
     }
-    public void AdminOperations()
-    {
+
+    public void AdminOperations() {
+        createDateLable.setVisibility(View.GONE);
+        billTypeLable.setVisibility(View.GONE);
+        billTypeValue.setVisibility(View.GONE);
         chooseImage.setVisibility(View.VISIBLE);
         datePicker.setVisibility(View.VISIBLE);
         createBill.setVisibility(View.VISIBLE);

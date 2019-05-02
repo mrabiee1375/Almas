@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ import com.example.almas.R;
 import com.example.almas.Utilities.Utility;
 
 import java.util.ArrayList;
+
+import okhttp3.internal.Util;
 
 public class ChargeDetailListAdapter extends BaseAdapter implements android.widget.ListAdapter {
     protected ArrayList<ChargeDetailModel> list = new ArrayList<ChargeDetailModel>();
@@ -52,7 +55,7 @@ public class ChargeDetailListAdapter extends BaseAdapter implements android.widg
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -77,11 +80,11 @@ public class ChargeDetailListAdapter extends BaseAdapter implements android.widg
             Utility.EnableEditText(chargeItemPrice);
         }
         else{
-            deleteBtn.setVisibility(View.INVISIBLE);
+            deleteBtn.setVisibility(View.GONE);
             Utility.DisableEditText(chargeItemTitle);
             Utility.DisableEditText(chargeItemPrice);
         }
-
+        final  View pageView=view;
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

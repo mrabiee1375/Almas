@@ -30,15 +30,10 @@ public class UserModel {
     private String userToken;
     @SerializedName("isAdmin")
     @Expose
-    private boolean isAdmin;
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    public boolean getAdmin() {
-        return isAdmin;
-    }
+    private Boolean isAdmin;
+    @SerializedName("imagePath")
+    @Expose
+    private String imagePath;
 
     public String getFirstName() {
         return firstName;
@@ -102,5 +97,21 @@ public class UserModel {
 
     public void setUserToken(String userToken) {
         this.userToken = userToken;
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

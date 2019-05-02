@@ -91,7 +91,8 @@ public class FragmentChargesList extends Fragment {
 
 
         _ApiService = RetrofitClient.getAPIService(StaticVars.BaseUrl);
-        _ApiService.GetChargeRecords(model).enqueue(new Callback<ResponseModel<ArrayList<ChargeModel>>>() {
+        boolean justEnables=(StaticVars.IsAdmin?false:true);
+        _ApiService.GetChargeRecords(model,justEnables).enqueue(new Callback<ResponseModel<ArrayList<ChargeModel>>>() {
             @Override
             public void onResponse(Call<ResponseModel<ArrayList<ChargeModel>>> call, Response<ResponseModel<ArrayList<ChargeModel>>> response) {
                 if (response.body().getIsSuccess()) {
@@ -103,6 +104,7 @@ public class FragmentChargesList extends Fragment {
                     for (int i = 0; i < responseData.size(); i++) {
                         ListAdapterModel item = new ListAdapterModel();
                         item.setId(responseData.get(i).getId());
+                        item.setStatus(responseData.get(i).getIsEnable()==true?"فعال":"غیرفعال");
                         item.setText(responseData.get(i).getTitle());
                         adapterModelsList.add(item);
                     }

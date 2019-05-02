@@ -11,13 +11,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.almas.Api.ApiService;
+import com.example.almas.Api.RetrofitClient;
 import com.example.almas.FragmentBillsList;
 import com.example.almas.FragmentCreateBill;
 import com.example.almas.Models.ListAdapterModel;
+import com.example.almas.Models.ResponseModel;
 import com.example.almas.Models.StaticVars;
 import com.example.almas.R;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BillListAdapter extends ListAdapter {
     public  BillListAdapter(ArrayList<ListAdapterModel> list, Context context)
@@ -37,23 +44,40 @@ public class BillListAdapter extends ListAdapter {
         TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
         listItemText.setText(list.get(position).getText());
 
+        //Handle TextView and display string from your list
+        TextView listItemStatus = (TextView)view.findViewById(R.id.list_item_status);
+        listItemStatus.setVisibility(View.GONE);
+
         //Handle buttons and add onClickListeners
         Button deleteBtn = (Button) view.findViewById(R.id.delete_btn);
         Button updateBtn = (Button)view.findViewById(R.id.update_btn);
         if(!StaticVars.IsAdmin)
         {
-            deleteBtn.setVisibility(View.INVISIBLE);
+            deleteBtn.setVisibility(View.GONE);
             updateBtn.setText("مشاهده");
         }
         else
         {
             deleteBtn.setVisibility(View.VISIBLE);
             updateBtn.setText("مشاهده و ویرایش");
+
         }
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                list.remove(position);
+
+                ApiService apiService= RetrofitClient.getAPIService(StaticVars.BaseUrl);
+                apiService.DeleteBill(list.get(position).getId()).enqueue(new Callback<ResponseModel<Boolean>>() {
+                    @Override
+                    public void onResponse(Call<ResponseModel<Boolean>> call, Response<ResponseModel<Boolean>> response) {
+                        list.remove(position);
+                        notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseModel<Boolean>> call, Throwable t) {
+                    }
+                });
             }
         });
         updateBtn.setOnClickListener(new View.OnClickListener(){

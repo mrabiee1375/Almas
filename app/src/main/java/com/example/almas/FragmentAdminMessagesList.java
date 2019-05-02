@@ -90,7 +90,8 @@ public class FragmentAdminMessagesList extends Fragment {
 
     public void GetAdminMessagesList(GetAdminMessgesRequestModel model) {
         _ApiService = RetrofitClient.getAPIService(StaticVars.BaseUrl);
-        _ApiService.GetAdminMessages(model).enqueue(new Callback<ResponseModel<ArrayList<AdminMessageModel>>>() {
+        boolean justEnables=(StaticVars.IsAdmin?false:true);
+        _ApiService.GetAdminMessages(model,justEnables).enqueue(new Callback<ResponseModel<ArrayList<AdminMessageModel>>>() {
             @Override
             public void onResponse(Call<ResponseModel<ArrayList<AdminMessageModel>>> call, Response<ResponseModel<ArrayList<AdminMessageModel>>> response) {
                 try {
@@ -105,6 +106,7 @@ public class FragmentAdminMessagesList extends Fragment {
                             ListAdapterModel item = new ListAdapterModel();
                             item.setId(responseData.get(i).getId());
                             item.setText(responseData.get(i).getTitle());
+                            item.setStatus(responseData.get(i).getIsEnable()==true?"فعال":"غیرفعال");
                             adapterModelsList.add(item);
                         }
 

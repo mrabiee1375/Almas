@@ -47,6 +47,7 @@ public class LogInLayout extends AppCompatActivity {
 
                 if(response.body().getIsSuccess()) {
                     Gson gson = new Gson();
+                    response.body().getData().setImagePath(StaticVars.BaseUrl.substring(0, StaticVars.BaseUrl.length() - 1) + response.body().getData().getImagePath());
                     String jsonObj = gson.toJson(response.body().getData());
                     SharedPreferences.Editor sharedEditor = getSharedPreferences("userDetailsShEditor", MODE_PRIVATE).edit();
                     sharedEditor.putString("userDetails", jsonObj);

@@ -12,12 +12,14 @@ import com.example.almas.Models.GetChargesRequestModel;
 import com.example.almas.Models.LogInModel;
 import com.example.almas.Models.ResponseModel;
 import com.example.almas.Models.SignInModel;
+import com.example.almas.Models.UploadProfileImageModel;
 import com.example.almas.Models.UserModel;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -47,9 +49,13 @@ public interface ApiService {
     @GET("Admin/GetBillDetails/")
     Call<ResponseModel<BillModel>> GetBillDetail(@Query("billId")int billId);
 
+    @DELETE("Admin/DeleteBill/")
+    Call<ResponseModel<Boolean>> DeleteBill(@Query("billId") int billId);
+
     //admin messages region
     @POST("Admin/GetAdminMessages/")
-    Call<ResponseModel<ArrayList<AdminMessageModel>>> GetAdminMessages(@Body GetAdminMessgesRequestModel model);
+    Call<ResponseModel<ArrayList<AdminMessageModel>>> GetAdminMessages(@Body GetAdminMessgesRequestModel model
+            ,@Query("justEnables") boolean justEnables);
 
     @POST("Admin/CreateAdminMessage/")
     Call<ResponseModel<AdminMessageModel>> CreateAdminMessage(@Body CreateAndEditAdminMessageRequest model);
@@ -60,9 +66,14 @@ public interface ApiService {
     @GET("Admin/GetAdminMessageDetails/")
     Call<ResponseModel<AdminMessageModel>> GetAdminMessageDetails(@Query("messageId")int messageId);
 
+
+    @POST("Admin/ChangeAdminMessageStatus/")
+    Call<ResponseModel<Boolean>> ChangeAdminMessageStatus(@Query("messageId") int messageId);
+
     //admin charge region
     @POST("Admin/GetChargeRecords/")
-    Call<ResponseModel<ArrayList<ChargeModel>>> GetChargeRecords(@Body GetChargesRequestModel model);
+    Call<ResponseModel<ArrayList<ChargeModel>>> GetChargeRecords(@Body GetChargesRequestModel model
+            ,@Query("justEnables") boolean justEnables);
 
     @POST("Admin/CreateCharge/")
     Call<ResponseModel<ChargeModel>> CreateCharge(@Body ChargeModel model);
@@ -72,5 +83,11 @@ public interface ApiService {
 
     @GET("Admin/GetCharge/")
     Call<ResponseModel<ChargeModel>> GetCharge(@Query("chargeId")int chargeId);
+
+    @POST("Account/UploadImage/")
+    Call<ResponseModel<String>> UploadImage(@Body UploadProfileImageModel model);
+
+    @POST("Admin/ChangeChargeStatus/")
+    Call<ResponseModel<Boolean>> ChangeChargeStatus(@Query("chargeId") int chargeId);
 
 }

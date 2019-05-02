@@ -1,12 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:id="@+id/signIn_mItem" android:title="عضویت"/>
-<item android:id="@+id/logIn_mItem" android:title="ورود"/>
-<item android:id="@+id/signOut_mItem" android:title="خروج"/>
-<item android:id="@+id/bills_mItem" android:title="قبوض"/>
-<item android:id="@+id/create_bill_mItem" android:title="افزودن قبض"/>
-<item android:id="@+id/charges_mItem" android:title="شارژ"/>
-<item android:id="@+id/create_charge_mItem" android:title="افزودن شارژ"/>
-<item android:id="@+id/messages_mItem" android:title="پیام ها"/>
-<item android:id="@+id/create_message_mItem" android:title="افزودن پیام"/>
+    <group android:id="@+id/g1">
+        <item
+            android:icon="@drawable/id_card"
+            android:id="@+id/signIn_mItem"
+            android:title="عضویت" />
+        <item
+            android:icon="@drawable/log_in"
+            android:id="@+id/logIn_mItem"
+            android:title="ورود" />
+    </group>
+    <group android:id="@+id/g3">
+        <item
+            android:icon="@drawable/money"
+            android:id="@+id/bills_mItem"
+            android:title="قبوض" />
+
+        <item
+            android:icon="@drawable/bill"
+            android:id="@+id/create_bill_mItem"
+            android:title="افزودن قبض" />
+    </group>
+    <group android:id="@+id/g5">
+        <item
+            android:icon="@drawable/smart_home"
+            android:id="@+id/charges_mItem"
+            android:title="شارژ" />
+
+        <item
+            android:icon="@drawable/charging"
+            android:id="@+id/create_charge_mItem"
+            android:title="افزودن شارژ" />
+    </group>
+    <group android:id="@+id/g7">
+        <item
+            android:icon="@drawable/speech_bubble"
+            android:id="@+id/messages_mItem"
+            android:title="پیام ها" />
+
+        <item
+            android:icon="@drawable/paper_plane"
+            android:id="@+id/create_message_mItem"
+            android:title="افزودن پیام" />
+    </group>
+    <group android:id="@+id/g9">
+        <item
+            android:icon="@drawable/icon"
+            android:id="@+id/signOut_mItem"
+            android:title="خروج" />
+    </group>
+
 </menu>
