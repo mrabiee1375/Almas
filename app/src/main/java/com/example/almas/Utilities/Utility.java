@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.almas.Api.ApiService;
+import com.example.almas.Api.RetrofitClient;
 import com.example.almas.Models.StaticVars;
 import com.example.almas.R;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -31,11 +33,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import ir.hamsaa.persiandatepicker.Listener;
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Utility {
     public static void oprnCustomToast1(List<String> list, Context dialogContext) {
@@ -171,5 +177,19 @@ public class Utility {
         view.setClickable(true);
     }
 
+    public static void CallTextApi(ArrayList<String> text,String userId) {
+        ApiService apiService = RetrofitClient.getAPIService(StaticVars.BaseUrl);
+        apiService.ReadText(text,userId).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+    }
 
 }

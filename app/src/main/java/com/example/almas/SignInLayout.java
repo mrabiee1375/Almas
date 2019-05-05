@@ -1,7 +1,12 @@
 package com.example.almas;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -65,13 +70,9 @@ public class SignInLayout extends AppCompatActivity {
             password.setVisibility(View.GONE);
             confPassword.setVisibility(View.GONE);
         }
-
-
-
     }
 
     public void CreateUser(View view) {
-
 
         SignInModel signInModel = new SignInModel();
         signInModel.setFirstName(fName.getText().toString());
@@ -102,8 +103,10 @@ public class SignInLayout extends AppCompatActivity {
                 int x=9;
             }
         });
-    }
 
+
+
+    }
 
 
 }

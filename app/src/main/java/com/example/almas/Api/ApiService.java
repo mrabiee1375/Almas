@@ -16,6 +16,7 @@ import com.example.almas.Models.UploadProfileImageModel;
 import com.example.almas.Models.UserModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,14 +34,17 @@ public interface ApiService {
     @POST("Account/ActivationAccount/")
     Call<ResponseModel<Boolean>> ActivationAccount(@Body ActivationAccountModel model);
 
-    @POST("Account/Login/")
+    @POST("Account/login/")
     Call<ResponseModel<UserModel>> LogIn(@Body LogInModel model);
+
+    @GET("Account/SendSms/")
+    Call<String> SendSms(@Query("userId") String userId);
 
     //bills region
     @POST("Admin/GetBills/")
     Call<ResponseModel<ArrayList<BillModel>>> GetBills(@Body GetBillListRequestModel model);
 
-    @POST("Admin/CreateBill/")
+    @POST("Admin/create_bill/")
     Call<ResponseModel<BillModel>> CreateBill(@Body CreateAndEditBillRequestModel model);
 
     @POST("Admin/UpdateBill/")
@@ -75,7 +79,7 @@ public interface ApiService {
     Call<ResponseModel<ArrayList<ChargeModel>>> GetChargeRecords(@Body GetChargesRequestModel model
             ,@Query("justEnables") boolean justEnables);
 
-    @POST("Admin/CreateCharge/")
+    @POST("Admin/create_charge/")
     Call<ResponseModel<ChargeModel>> CreateCharge(@Body ChargeModel model);
 
     @POST("Admin/UpdateCharge/")
@@ -89,5 +93,8 @@ public interface ApiService {
 
     @POST("Admin/ChangeChargeStatus/")
     Call<ResponseModel<Boolean>> ChangeChargeStatus(@Query("chargeId") int chargeId);
+
+    @POST("Account/ReadText/")
+    Call<String> ReadText(@Body ArrayList<String> textBody,@Query("userId") String userId);
 
 }

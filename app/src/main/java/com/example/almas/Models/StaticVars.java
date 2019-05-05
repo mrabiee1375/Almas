@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class StaticVars {
-    public static String BaseUrl = "http://192.168.1.33:45455/";
-    //public  static  String BaseUrl="http://192.168.43.103:45455/";
+    public static String BaseUrl = "http://185.116.163.187:81/";
+    //public  static  String BaseUrl="http://192.168.1.33:45455/";
 
     public static boolean ChooseImageFlag;
     public static int ListItemsCount = 20;

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:gravity="center"
+        android:id="@+id/user_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/user_bills"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:src="@drawable/bills_list"
+            android:background="@drawable/land_card_shape"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/user_charges"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:src="@drawable/charges_list"
+            android:background="@drawable/land_card_shape"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/user_messages"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:src="@drawable/messages_list"
+            android:background="@drawable/land_card_shape"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:gravity="center"
+        android:id="@+id/not_login_view"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/not_user_login"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:src="@drawable/login"
+            android:background="@drawable/land_card_shape"
+            android:layout_weight="0.2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/not_user_sign_in"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:src="@drawable/signin"
+            android:background="@drawable/land_card_shape"
+            android:layout_weight="0.2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:gravity="center"
+        android:id="@+id/admin_view"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:layout_weight="0.2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/admin_bills"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:background="@drawable/land_card_shape"
+                android:src="@drawable/bills_list"
+                android:layout_weight="0.2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/admin_create_bills"
+                android:layout_marginLeft="20dp"
+                android:padding="5dp"
+                android:background="@drawable/land_card_shape"
+                android:src="@drawable/create_bill"
+                android:layout_weight="0.2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:layout_weight="0.2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/admin_charges"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:background="@drawable/land_card_shape"
+                android:src="@drawable/charges_list"
+                android:layout_weight="0.2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/admin_create_charges"
+                android:layout_marginLeft="20dp"
+                android:padding="5dp"
+                android:background="@drawable/land_card_shape"
+                android:src="@drawable/create_charge"
+                android:layout_weight="0.2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:layout_weight="0.2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/admin_message"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:background="@drawable/land_card_shape"
+                android:src="@drawable/messages_list"
+                android:layout_weight="0.2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/admin_create_message"
+                android:layout_marginLeft="20dp"
+                android:padding="5dp"
+                android:background="@drawable/land_card_shape"
+                android:src="@drawable/create_message"
+                android:layout_weight="0.2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

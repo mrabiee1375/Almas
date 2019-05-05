@@ -3,6 +3,7 @@ package com.example.almas;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.menu_layout);
 
         menu_icon = (ImageView) findViewById(R.id.open_menu);
@@ -127,11 +129,10 @@ public class MainActivity extends AppCompatActivity {
             BeforeLoginOperations();
         }
 
-        //List<String> a=new ArrayList<String>();
-        //a.add("A");
-        //Utility.oprnCustomToast(a,MainActivity.this);
+        ArrayList<String> a=new ArrayList<String>();
 
-
+        FragmentLandPage land=new FragmentLandPage();
+        LoadFragment(land);
     }
 
     @Override
@@ -170,23 +171,17 @@ public class MainActivity extends AppCompatActivity {
         logIn_mItem.setVisible(true);
         signIn_mItem.setTitle("عضویت");
 
+        StaticVars.UserModel=null;
+        StaticVars.IsAdmin=false;
         Intent intent = new Intent(MainActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
     public void LoadFragment(Fragment fragment) {
-        // Create new fragment and transaction
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack
         transaction.replace(R.id.fragmentFrame, fragment);
         transaction.addToBackStack(null);
-
-        // Commit the transaction
         transaction.commit();
-
         drawerLayout.closeDrawer(Gravity.RIGHT);
     }
 
